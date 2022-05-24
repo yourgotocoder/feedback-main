@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import MainRouter from "./routes/MainRouter.routes";
+import ErrorHandler from "./models/ErrorHandler";
 
 // load the environment variables from the .env file
 dotenv.config({
@@ -23,4 +24,18 @@ const server = new Server();
 ((port = process.env.APP_PORT || 5000) => {
     server.app.listen(port, () => console.log(`> Listening on port ${port}`));
     server.app.use("/api", server.router);
+    server.app.use(
+        (
+            err: ErrorHandler,
+            req: Request,
+            res: Response,
+            next: NextFunction
+        ) => {
+            res.status(err.statusCode || 500).json({
+                status: "error",
+                statusCode: err.statusCode,
+                message: err.message,
+            });
+        }
+    );
 })();

@@ -1,10 +1,10 @@
 import { Router } from "express";
-import ThemeARouter from "./Feedback/FeedbackRouter.routes";
+import FeedbackRouter from "./Feedback/FeedbackRouter.routes";
 // import ThemeBRouter from './themeB/ThemeBRouter';
 
 class MasterRouter {
     private _router = Router();
-    private _subrouterA = ThemeARouter;
+    private _subrouterA = FeedbackRouter;
     //   private _subrouterB = ThemeBRouter;
 
     get router() {
